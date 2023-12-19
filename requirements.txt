@@ -1,0 +1,7 @@
+pandas
+numpy
+requests
+azure-identity
+tqdm
+pytz
+python-dateutil

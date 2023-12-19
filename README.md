@@ -8,6 +8,10 @@ and then the final output displays the top 10 results based on Z-scores, excludi
 
 Before running the script, make sure you have installed all necessary Python packages mentioned below.
 
+## Why use this?
+For threat hunting in netflow data, high Z-scores can be particularly useful for identifying unusual data transfer patterns that 
+might warrant further investigation for potential security incidents.
+
 ## Requirements
 `pip install -r requirements.txt`
 
@@ -27,7 +31,3 @@ In the NetSleuthXplorer script, replace the following with your own values:
 - `file_path = 'your_csv_file.csv'`
 
 You will also need to make sure your Client ID has `ThreatIntelligence.Read.All` permissions in order to perform the DNS lookups with MDTI.
-
-## Why use this?
-For threat hunting in netflow data, high Z-scores can be particularly useful for identifying unusual data transfer patterns that 
-might warrant further investigation for potential security incidents.

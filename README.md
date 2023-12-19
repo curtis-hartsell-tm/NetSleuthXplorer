@@ -19,6 +19,15 @@ Before running the script, make sure you have installed all necessary Python pac
 - pytz
 - python-dateutil
 
+In the NetSleuthXplorer script, replace the following with your own values:
+
+- `client_id = 'YOUR_CLIENT_ID'`
+- `client_secret = 'YOUR_CLIENT_SECRET'`
+- `tenant_id = 'YOUR_TENANT_ID'`
+- `file_path = 'your_csv_file.csv'`
+
+You will also need to make sure your Client ID has `ThreatIntelligence.Read.All` permissions in order to perform the DNS lookups with MDTI.
+
 ## Why use this?
 For threat hunting in netflow data, high Z-scores can be particularly useful for identifying unusual data transfer patterns that 
 might warrant further investigation for potential security incidents.

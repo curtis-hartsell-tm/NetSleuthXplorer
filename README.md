@@ -28,4 +28,4 @@ In the NetSleuthXplorer script, replace the following with your own values:
 - `tenant_id = 'YOUR_TENANT_ID'`
 - `file_path = 'your_csv_file.csv'`
 
-You will also need to make sure your Client ID has `ThreatIntelligence.Read.All` permissions in order to perform the DNS lookups with MDTI.
+You will also need to make sure your Client ID has `ThreatIntelligence.Read.All` permissions in order to perform the DNS and IP reputation lookups with MDTI.

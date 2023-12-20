@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import requests
-from azure.identity import ClientSecretCredential
 from tqdm import tqdm
 import json
 from datetime import datetime
@@ -63,9 +62,8 @@ def get_host_reputation(ip, access_token):
     if response.status_code == 200:
         try:
             data = response.json()
-            reputation_info = data.get('value', {})
-            reputation = reputation_info.get('reputation', 'Unknown')
-            return reputation
+            classification = data.get('classification', 'Unknown')
+            return classification
         except json.JSONDecodeError:
             return "Failed to parse JSON response"
     else:
@@ -107,15 +105,15 @@ for ip in tqdm(unique_dst_ip_addresses, desc="Resolving DNS and Fetching IP Repu
     success, hostname = resolve_dns(ip, access_token)
     if success:
         dns_results[ip] = hostname
-        reputation = get_host_reputation(ip, access_token)
-        reputation_results[ip] = reputation
+    reputation = get_host_reputation(ip, access_token)
+    reputation_results[ip] = reputation
 
 # Map the DNS and reputation results back to the DataFrame
-significant_deviation['dst_ip_dns'] = significant_deviation['dst_ip_addr'].apply(dns_results.get)
-significant_deviation['ip_reputation'] = significant_deviation['dst_ip_addr'].apply(reputation_results.get)
+significant_deviation['dst_ip_dns'] = significant_deviation['dst_ip_addr'].apply(lambda ip: dns_results.get(ip, "DNS resolution failed"))
+significant_deviation['ip_reputation'] = significant_deviation['dst_ip_addr'].apply(lambda ip: reputation_results.get(ip, "Unknown"))
 
 # Filter out rows with failed or unwanted DNS resolutions
-significant_deviation = significant_deviation[significant_deviation['dst_ip_dns'].notna()]
+significant_deviation = significant_deviation[significant_deviation['dst_ip_dns'] != "DNS resolution failed"]
 
 # Sort by Z-score and get the top 10 results
 top_10_results = significant_deviation.nlargest(10, 'z_score')
